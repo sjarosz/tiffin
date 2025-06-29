@@ -25,6 +25,7 @@ final class AudioRecording {
     
     // Transcription properties - made optional for backward compatibility
     var transcriptText: String?
+    var transcriptPath: String? // Path to saved transcript file
     var transcriptTimestamps: Data? // JSON-encoded timestamp data
     var _transcriptionStatus: String? // Internal storage
     var transcriptionDate: Date?
