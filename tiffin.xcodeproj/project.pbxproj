@@ -1,0 +1,1453 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		59371DD62E0DB69400BB40E6 /* libaudiosdk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; };
+		59371DD72E0DB69400BB40E6 /* libaudiosdk.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		59371DDB2E0DB6A200BB40E6 /* libaudiosdk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; };
+		59371DDC2E0DB6A200BB40E6 /* libaudiosdk.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		59371DE02E0DB6A800BB40E6 /* libaudiosdk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; };
+		59371DE12E0DB6A800BB40E6 /* libaudiosdk.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		59371DE52E0DB6B200BB40E6 /* libaudiosdk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; };
+		59371DE62E0DB6B200BB40E6 /* libaudiosdk.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		59ADAF5C2E105B330028B160 /* libWhisperCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C73B932E103FB100537FB5 /* libWhisperCore.a */; };
+		59ADAF5D2E1063590028B160 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C745E22E10496E00537FB5 /* Foundation.framework */; };
+		59ADAF5E2E10637B0028B160 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C745DE2E10494C00537FB5 /* Metal.framework */; };
+		59ADAF5F2E1063910028B160 /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C745E02E10495F00537FB5 /* MetalKit.framework */; };
+		59ADAF602E1063970028B160 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C745DC2E10492600537FB5 /* Accelerate.framework */; };
+		59ADAF632E1065020028B160 /* libc++abi.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADAF612E1065020028B160 /* libc++abi.tbd */; };
+		59ADAF642E1065020028B160 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 59ADAF622E1065020028B160 /* libc++.tbd */; };
+		59C745FF2E10513100537FB5 /* ggml-base.bin in Resources */ = {isa = PBXBuildFile; fileRef = 59C745FE2E10513100537FB5 /* ggml-base.bin */; };
+		59C746002E10513100537FB5 /* ggml-base.bin in Resources */ = {isa = PBXBuildFile; fileRef = 59C745FE2E10513100537FB5 /* ggml-base.bin */; };
+		59C746012E10513100537FB5 /* ggml-base.bin in Resources */ = {isa = PBXBuildFile; fileRef = 59C745FE2E10513100537FB5 /* ggml-base.bin */; };
+		59C746022E10516700537FB5 /* libWhisperCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C73B932E103FB100537FB5 /* libWhisperCore.a */; };
+		59C746052E10518100537FB5 /* libWhisperCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C73B932E103FB100537FB5 /* libWhisperCore.a */; };
+		59C746082E1051AE00537FB5 /* libtranscribe.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C733B52E1020DA00537FB5 /* libtranscribe.dylib */; };
+		59C746092E1051AE00537FB5 /* libtranscribe.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59C733B52E1020DA00537FB5 /* libtranscribe.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		59C7460C2E1051B800537FB5 /* libtranscribe.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C733B52E1020DA00537FB5 /* libtranscribe.dylib */; };
+		59C7460D2E1051B800537FB5 /* libtranscribe.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59C733B52E1020DA00537FB5 /* libtranscribe.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59371DD82E0DB69400BB40E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59D6510E2E0DAAD000A276F3;
+			remoteInfo = audiosdk;
+		};
+		59371DDD2E0DB6A200BB40E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59D6510E2E0DAAD000A276F3;
+			remoteInfo = audiosdk;
+		};
+		59371DE22E0DB6A800BB40E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59D6510E2E0DAAD000A276F3;
+			remoteInfo = audiosdk;
+		};
+		59371DE72E0DB6B200BB40E6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59D6510E2E0DAAD000A276F3;
+			remoteInfo = audiosdk;
+		};
+		59C746032E10516700537FB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59C73B922E103FB100537FB5;
+			remoteInfo = WhisperCore;
+		};
+		59C746062E10518100537FB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59C73B922E103FB100537FB5;
+			remoteInfo = WhisperCore;
+		};
+		59C7460A2E1051AE00537FB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59C733B42E1020DA00537FB5;
+			remoteInfo = transcribe;
+		};
+		59C7460E2E1051B800537FB5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59C733B42E1020DA00537FB5;
+			remoteInfo = transcribe;
+		};
+		59D650EF2E0DAA9900A276F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59D650DD2E0DAA9800A276F3;
+			remoteInfo = tiffin;
+		};
+		59D650F92E0DAA9900A276F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59D650DD2E0DAA9800A276F3;
+			remoteInfo = tiffin;
+		};
+		59D651242E0DAAF900A276F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 59D650D62E0DAA9800A276F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 59D6510E2E0DAAD000A276F3;
+			remoteInfo = audiosdk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		59371DDA2E0DB69400BB40E6 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				59371DD72E0DB69400BB40E6 /* libaudiosdk.dylib in Embed Libraries */,
+				59C7460D2E1051B800537FB5 /* libtranscribe.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59371DDF2E0DB6A200BB40E6 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				59371DDC2E0DB6A200BB40E6 /* libaudiosdk.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59371DE42E0DB6A800BB40E6 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				59371DE12E0DB6A800BB40E6 /* libaudiosdk.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59371DE92E0DB6B200BB40E6 /* Embed Libraries */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				59371DE62E0DB6B200BB40E6 /* libaudiosdk.dylib in Embed Libraries */,
+				59C746092E1051AE00537FB5 /* libtranscribe.dylib in Embed Libraries */,
+			);
+			name = "Embed Libraries";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D6511A2E0DAAF900A276F3 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		59897D9C2E10766F00F03168 /* ggml-cpu.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "ggml-cpu.cpp"; path = "WhisperCore/ggml/src/ggml-cpu/ggml-cpu.cpp"; sourceTree = "<group>"; };
+		59ADAF612E1065020028B160 /* libc++abi.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++abi.tbd"; path = "usr/lib/libc++abi.tbd"; sourceTree = SDKROOT; };
+		59ADAF622E1065020028B160 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		59C733B52E1020DA00537FB5 /* libtranscribe.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libtranscribe.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		59C73B932E103FB100537FB5 /* libWhisperCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libWhisperCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		59C740BB2E103FF200537FB5 /* whisper.objc.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = whisper.objc.xcodeproj; sourceTree = "<group>"; };
+		59C740D62E103FF200537FB5 /* whisper.swiftui.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = whisper.swiftui.xcodeproj; sourceTree = "<group>"; };
+		59C745DC2E10492600537FB5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		59C745DE2E10494C00537FB5 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		59C745E02E10495F00537FB5 /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		59C745E22E10496E00537FB5 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		59C745FE2E10513100537FB5 /* ggml-base.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = "ggml-base.bin"; sourceTree = "<group>"; };
+		59D650DE2E0DAA9800A276F3 /* tiffin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = tiffin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		59D650EE2E0DAA9900A276F3 /* tiffinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tiffinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59D650F82E0DAA9900A276F3 /* tiffinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tiffinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libaudiosdk.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		59D6511C2E0DAAF900A276F3 /* TestSDK */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestSDK; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		59ADAEE62E1054020028B160 /* Exceptions for "WhisperCore" folder in "WhisperCore" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			additionalCompilerFlagsByRelativePath = {
+				"ggml/src/ggml-metal/ggml-metal.m" = "-fno-objc-arc";
+			};
+			membershipExceptions = (
+				bindings/go/Makefile,
+				"bindings/java/gradle/wrapper/gradle-wrapper.jar",
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/bean/WhisperSegment.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/callbacks/GgmlAbortCallback.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/callbacks/WhisperEncoderBeginCallback.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/callbacks/WhisperLogitsFilterCallback.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/callbacks/WhisperNewSegmentCallback.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/callbacks/WhisperProgressCallback.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/ggml/GgmlTensor.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/ggml/GgmlType.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/model/EModel.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/model/WhisperModel.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/model/WhisperModelLoader.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/model/WhisperState.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/model/WhisperTokenData.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/BeamSearchParams.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/CBool.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/GreedyParams.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/WhisperAhead.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/WhisperAheads.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/WhisperContextParams.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/WhisperFilters.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/WhisperFullParams.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/WhisperHParams.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/params/WhisperSamplingStrategy.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/WhisperConstants.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/WhisperContext.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/WhisperCpp.java,
+				bindings/java/src/main/java/io/github/ggerganov/whispercpp/WhisperCppJnaLibrary.java,
+				bindings/java/src/test/java/io/github/ggerganov/whispercpp/WhisperCppTest.java,
+				bindings/java/src/test/java/io/github/ggerganov/whispercpp/WhisperJnaLibraryTest.java,
+				bindings/javascript/emscripten.cpp,
+				bindings/ruby/ext/ruby_whisper_context.c,
+				bindings/ruby/ext/ruby_whisper_error.c,
+				bindings/ruby/ext/ruby_whisper_model.c,
+				bindings/ruby/ext/ruby_whisper_params.c,
+				bindings/ruby/ext/ruby_whisper_segment.c,
+				bindings/ruby/ext/ruby_whisper_transcribe.cpp,
+				bindings/ruby/ext/ruby_whisper_vad_params.c,
+				bindings/ruby/ext/ruby_whisper.c,
+				bindings/ruby/test/jfk_reader/jfk_reader.c,
+				"ggml/src/ggml-amx/ggml-amx.cpp",
+				"ggml/src/ggml-amx/mmq.cpp",
+				"ggml/src/ggml-blas/ggml-blas.cpp",
+				"ggml/src/ggml-cann/acl_tensor.cpp",
+				"ggml/src/ggml-cann/aclnn_ops.cpp",
+				"ggml/src/ggml-cann/ggml-cann.cpp",
+				"ggml/src/ggml-cann/kernels/dup.cpp",
+				"ggml/src/ggml-cann/kernels/get_row_f16.cpp",
+				"ggml/src/ggml-cann/kernels/get_row_f32.cpp",
+				"ggml/src/ggml-cann/kernels/get_row_q4_0.cpp",
+				"ggml/src/ggml-cann/kernels/get_row_q8_0.cpp",
+				"ggml/src/ggml-cann/kernels/quantize_f16_q8_0.cpp",
+				"ggml/src/ggml-cann/kernels/quantize_f32_q8_0.cpp",
+				"ggml/src/ggml-cann/kernels/quantize_float_to_q4_0.cpp",
+				"ggml/src/ggml-cpu/amx/amx.cpp",
+				"ggml/src/ggml-cpu/amx/mmq.cpp",
+				"ggml/src/ggml-cpu/arch/arm/cpu-feats.cpp",
+				"ggml/src/ggml-cpu/arch/arm/repack.cpp",
+				"ggml/src/ggml-cpu/arch/loongarch/quants.c",
+				"ggml/src/ggml-cpu/arch/powerpc/cpu-feats.cpp",
+				"ggml/src/ggml-cpu/arch/powerpc/quants.c",
+				"ggml/src/ggml-cpu/arch/riscv/quants.c",
+				"ggml/src/ggml-cpu/arch/riscv/repack.cpp",
+				"ggml/src/ggml-cpu/arch/s390/quants.c",
+				"ggml/src/ggml-cpu/arch/wasm/quants.c",
+				"ggml/src/ggml-cpu/arch/x86/cpu-feats.cpp",
+				"ggml/src/ggml-cpu/arch/x86/quants.c",
+				"ggml/src/ggml-cpu/arch/x86/repack.cpp",
+				"ggml/src/ggml-cpu/hbm.cpp",
+				"ggml/src/ggml-cpu/kleidiai/kernels.cpp",
+				"ggml/src/ggml-cpu/kleidiai/kleidiai.cpp",
+				"ggml/src/ggml-cpu/llamafile/sgemm.cpp",
+				"ggml/src/ggml-cpu/repack.cpp",
+				"ggml/src/ggml-kompute/ggml-kompute.cpp",
+				"ggml/src/ggml-metal/ggml-metal.metal",
+				"ggml/src/ggml-opencl/ggml-opencl.cpp",
+				"ggml/src/ggml-opencl/kernels/add.cl",
+				"ggml/src/ggml-opencl/kernels/argsort.cl",
+				"ggml/src/ggml-opencl/kernels/clamp.cl",
+				"ggml/src/ggml-opencl/kernels/concat.cl",
+				"ggml/src/ggml-opencl/kernels/cpy.cl",
+				"ggml/src/ggml-opencl/kernels/cvt.cl",
+				"ggml/src/ggml-opencl/kernels/diag_mask_inf.cl",
+				"ggml/src/ggml-opencl/kernels/div.cl",
+				"ggml/src/ggml-opencl/kernels/gelu.cl",
+				"ggml/src/ggml-opencl/kernels/gemv_noshuffle_general.cl",
+				"ggml/src/ggml-opencl/kernels/gemv_noshuffle.cl",
+				"ggml/src/ggml-opencl/kernels/get_rows.cl",
+				"ggml/src/ggml-opencl/kernels/group_norm.cl",
+				"ggml/src/ggml-opencl/kernels/im2col_f16.cl",
+				"ggml/src/ggml-opencl/kernels/im2col_f32.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mat_Ab_Bi_8x4.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_f16_f16.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_f16_f32_1row.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_f16_f32_l4.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_f16_f32.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_f32_f32.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_id_q4_0_f32_8x_flat.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_q4_0_f32_1d_8x_flat.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_q4_0_f32_1d_16x_flat.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_q4_0_f32_8x_flat.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_q4_0_f32_v.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_q4_0_f32.cl",
+				"ggml/src/ggml-opencl/kernels/mul_mv_q6_k.cl",
+				"ggml/src/ggml-opencl/kernels/mul.cl",
+				"ggml/src/ggml-opencl/kernels/norm.cl",
+				"ggml/src/ggml-opencl/kernels/pad.cl",
+				"ggml/src/ggml-opencl/kernels/relu.cl",
+				"ggml/src/ggml-opencl/kernels/repeat.cl",
+				"ggml/src/ggml-opencl/kernels/rms_norm.cl",
+				"ggml/src/ggml-opencl/kernels/rope.cl",
+				"ggml/src/ggml-opencl/kernels/scale.cl",
+				"ggml/src/ggml-opencl/kernels/sigmoid.cl",
+				"ggml/src/ggml-opencl/kernels/silu.cl",
+				"ggml/src/ggml-opencl/kernels/softmax_4_f16.cl",
+				"ggml/src/ggml-opencl/kernels/softmax_4_f32.cl",
+				"ggml/src/ggml-opencl/kernels/softmax_f16.cl",
+				"ggml/src/ggml-opencl/kernels/softmax_f32.cl",
+				"ggml/src/ggml-opencl/kernels/sub.cl",
+				"ggml/src/ggml-opencl/kernels/sum_rows.cl",
+				"ggml/src/ggml-opencl/kernels/tanh.cl",
+				"ggml/src/ggml-opencl/kernels/transpose.cl",
+				"ggml/src/ggml-opencl/kernels/tsembd.cl",
+				"ggml/src/ggml-opencl/kernels/upscale.cl",
+				"ggml/src/ggml-rpc/ggml-rpc.cpp",
+				"ggml/src/ggml-sycl/binbcast.cpp",
+				"ggml/src/ggml-sycl/common.cpp",
+				"ggml/src/ggml-sycl/concat.cpp",
+				"ggml/src/ggml-sycl/conv.cpp",
+				"ggml/src/ggml-sycl/convert.cpp",
+				"ggml/src/ggml-sycl/cpy.cpp",
+				"ggml/src/ggml-sycl/dmmv.cpp",
+				"ggml/src/ggml-sycl/element_wise.cpp",
+				"ggml/src/ggml-sycl/getrows.cpp",
+				"ggml/src/ggml-sycl/ggml-sycl.cpp",
+				"ggml/src/ggml-sycl/gla.cpp",
+				"ggml/src/ggml-sycl/im2col.cpp",
+				"ggml/src/ggml-sycl/mmq.cpp",
+				"ggml/src/ggml-sycl/mmvq.cpp",
+				"ggml/src/ggml-sycl/norm.cpp",
+				"ggml/src/ggml-sycl/outprod.cpp",
+				"ggml/src/ggml-sycl/rope.cpp",
+				"ggml/src/ggml-sycl/softmax.cpp",
+				"ggml/src/ggml-sycl/sycl_hw.cpp",
+				"ggml/src/ggml-sycl/tsembd.cpp",
+				"ggml/src/ggml-sycl/wkv.cpp",
+				"ggml/src/ggml-vulkan/ggml-vulkan.cpp",
+				"ggml/src/ggml-vulkan/vulkan-shaders/vulkan-shaders-gen.cpp",
+				ggml/src/ggml.cpp,
+				ggml/src/gguf.cpp,
+				Makefile,
+				"src/coreml/whisper-compat.m",
+				"src/coreml/whisper-decoder-impl.m",
+				"src/coreml/whisper-encoder-impl.m",
+				"src/coreml/whisper-encoder.mm",
+				"src/openvino/whisper-openvino-encoder.cpp",
+				tests/earnings21/Makefile,
+				tests/librispeech/Makefile,
+				"tests/test-c.c",
+				"tests/test-vad-full.cpp",
+				"tests/test-vad.cpp",
+			);
+			target = 59C73B922E103FB100537FB5 /* WhisperCore */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		59ADAEF12E1054D10028B160 /* Exceptions for "WhisperCore" folder in "Compile Sources" phase from "WhisperCore" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 59C73B902E103FB100537FB5 /* Sources */;
+			membershipExceptions = (
+				WhisperCore.h,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		59C733B62E1020DA00537FB5 /* transcribe */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = transcribe;
+			sourceTree = "<group>";
+		};
+		59C73B942E103FB100537FB5 /* WhisperCore */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				59ADAEE62E1054020028B160 /* Exceptions for "WhisperCore" folder in "WhisperCore" target */,
+				59ADAEF12E1054D10028B160 /* Exceptions for "WhisperCore" folder in "Compile Sources" phase from "WhisperCore" target */,
+			);
+			path = WhisperCore;
+			sourceTree = "<group>";
+		};
+		59D650E02E0DAA9800A276F3 /* tiffin */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = tiffin;
+			sourceTree = "<group>";
+		};
+		59D650F12E0DAA9900A276F3 /* tiffinTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = tiffinTests;
+			sourceTree = "<group>";
+		};
+		59D650FB2E0DAA9900A276F3 /* tiffinUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = tiffinUITests;
+			sourceTree = "<group>";
+		};
+		59D651102E0DAAD000A276F3 /* audiosdk */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = audiosdk;
+			sourceTree = "<group>";
+		};
+		59D6511D2E0DAAF900A276F3 /* TestSDK */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = TestSDK;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		59C733B32E1020DA00537FB5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59ADAF632E1065020028B160 /* libc++abi.tbd in Frameworks */,
+				59ADAF642E1065020028B160 /* libc++.tbd in Frameworks */,
+				59ADAF5C2E105B330028B160 /* libWhisperCore.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59C73B912E103FB100537FB5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59ADAF5F2E1063910028B160 /* MetalKit.framework in Frameworks */,
+				59ADAF602E1063970028B160 /* Accelerate.framework in Frameworks */,
+				59ADAF5E2E10637B0028B160 /* Metal.framework in Frameworks */,
+				59ADAF5D2E1063590028B160 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650DB2E0DAA9800A276F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59371DD62E0DB69400BB40E6 /* libaudiosdk.dylib in Frameworks */,
+				59C7460C2E1051B800537FB5 /* libtranscribe.dylib in Frameworks */,
+				59C746052E10518100537FB5 /* libWhisperCore.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650EB2E0DAA9900A276F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59371DDB2E0DB6A200BB40E6 /* libaudiosdk.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650F52E0DAA9900A276F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59371DE02E0DB6A800BB40E6 /* libaudiosdk.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D6510D2E0DAAD000A276F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D651192E0DAAF900A276F3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59C746022E10516700537FB5 /* libWhisperCore.a in Frameworks */,
+				59C746082E1051AE00537FB5 /* libtranscribe.dylib in Frameworks */,
+				59371DE52E0DB6B200BB40E6 /* libaudiosdk.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		59371DD52E0DB69400BB40E6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				59ADAF622E1065020028B160 /* libc++.tbd */,
+				59ADAF612E1065020028B160 /* libc++abi.tbd */,
+				59C745E22E10496E00537FB5 /* Foundation.framework */,
+				59C745E02E10495F00537FB5 /* MetalKit.framework */,
+				59C745DE2E10494C00537FB5 /* Metal.framework */,
+				59C745DC2E10492600537FB5 /* Accelerate.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		59C7415B2E103FF200537FB5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59C7415D2E103FF200537FB5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		59D650D52E0DAA9800A276F3 = {
+			isa = PBXGroup;
+			children = (
+				59897D9C2E10766F00F03168 /* ggml-cpu.cpp */,
+				59C745FE2E10513100537FB5 /* ggml-base.bin */,
+				59D650E02E0DAA9800A276F3 /* tiffin */,
+				59D650F12E0DAA9900A276F3 /* tiffinTests */,
+				59D650FB2E0DAA9900A276F3 /* tiffinUITests */,
+				59D651102E0DAAD000A276F3 /* audiosdk */,
+				59D6511D2E0DAAF900A276F3 /* TestSDK */,
+				59C733B62E1020DA00537FB5 /* transcribe */,
+				59C73B942E103FB100537FB5 /* WhisperCore */,
+				59371DD52E0DB69400BB40E6 /* Frameworks */,
+				59D650DF2E0DAA9800A276F3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		59D650DF2E0DAA9800A276F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				59D650DE2E0DAA9800A276F3 /* tiffin.app */,
+				59D650EE2E0DAA9900A276F3 /* tiffinTests.xctest */,
+				59D650F82E0DAA9900A276F3 /* tiffinUITests.xctest */,
+				59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */,
+				59D6511C2E0DAAF900A276F3 /* TestSDK */,
+				59C733B52E1020DA00537FB5 /* libtranscribe.dylib */,
+				59C73B932E103FB100537FB5 /* libWhisperCore.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		59C733B12E1020DA00537FB5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59C73B8F2E103FB100537FB5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D6510B2E0DAAD000A276F3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		59C733B42E1020DA00537FB5 /* transcribe */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59C733BD2E1020DA00537FB5 /* Build configuration list for PBXNativeTarget "transcribe" */;
+			buildPhases = (
+				59C733B12E1020DA00537FB5 /* Headers */,
+				59C733B22E1020DA00537FB5 /* Sources */,
+				59C733B32E1020DA00537FB5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				59C733B62E1020DA00537FB5 /* transcribe */,
+			);
+			name = transcribe;
+			packageProductDependencies = (
+			);
+			productName = transcribe;
+			productReference = 59C733B52E1020DA00537FB5 /* libtranscribe.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		59C73B922E103FB100537FB5 /* WhisperCore */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59C73B992E103FB100537FB5 /* Build configuration list for PBXNativeTarget "WhisperCore" */;
+			buildPhases = (
+				59C73B8F2E103FB100537FB5 /* Headers */,
+				59C73B902E103FB100537FB5 /* Sources */,
+				59C73B912E103FB100537FB5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				59C73B942E103FB100537FB5 /* WhisperCore */,
+			);
+			name = WhisperCore;
+			packageProductDependencies = (
+			);
+			productName = WhisperCore;
+			productReference = 59C73B932E103FB100537FB5 /* libWhisperCore.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		59D650DD2E0DAA9800A276F3 /* tiffin */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59D651022E0DAA9900A276F3 /* Build configuration list for PBXNativeTarget "tiffin" */;
+			buildPhases = (
+				59D650DA2E0DAA9800A276F3 /* Sources */,
+				59D650DB2E0DAA9800A276F3 /* Frameworks */,
+				59D650DC2E0DAA9800A276F3 /* Resources */,
+				59371DDA2E0DB69400BB40E6 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59D651232E0DAAF900A276F3 /* PBXTargetDependency */,
+				59371DD92E0DB69400BB40E6 /* PBXTargetDependency */,
+				59C746072E10518100537FB5 /* PBXTargetDependency */,
+				59C7460F2E1051B800537FB5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				59D650E02E0DAA9800A276F3 /* tiffin */,
+			);
+			name = tiffin;
+			packageProductDependencies = (
+			);
+			productName = tiffin;
+			productReference = 59D650DE2E0DAA9800A276F3 /* tiffin.app */;
+			productType = "com.apple.product-type.application";
+		};
+		59D650ED2E0DAA9900A276F3 /* tiffinTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59D651052E0DAA9900A276F3 /* Build configuration list for PBXNativeTarget "tiffinTests" */;
+			buildPhases = (
+				59D650EA2E0DAA9900A276F3 /* Sources */,
+				59D650EB2E0DAA9900A276F3 /* Frameworks */,
+				59D650EC2E0DAA9900A276F3 /* Resources */,
+				59371DDF2E0DB6A200BB40E6 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59D650F02E0DAA9900A276F3 /* PBXTargetDependency */,
+				59371DDE2E0DB6A200BB40E6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				59D650F12E0DAA9900A276F3 /* tiffinTests */,
+			);
+			name = tiffinTests;
+			packageProductDependencies = (
+			);
+			productName = tiffinTests;
+			productReference = 59D650EE2E0DAA9900A276F3 /* tiffinTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		59D650F72E0DAA9900A276F3 /* tiffinUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59D651082E0DAA9900A276F3 /* Build configuration list for PBXNativeTarget "tiffinUITests" */;
+			buildPhases = (
+				59D650F42E0DAA9900A276F3 /* Sources */,
+				59D650F52E0DAA9900A276F3 /* Frameworks */,
+				59D650F62E0DAA9900A276F3 /* Resources */,
+				59371DE42E0DB6A800BB40E6 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59D650FA2E0DAA9900A276F3 /* PBXTargetDependency */,
+				59371DE32E0DB6A800BB40E6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				59D650FB2E0DAA9900A276F3 /* tiffinUITests */,
+			);
+			name = tiffinUITests;
+			packageProductDependencies = (
+			);
+			productName = tiffinUITests;
+			productReference = 59D650F82E0DAA9900A276F3 /* tiffinUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		59D6510E2E0DAAD000A276F3 /* audiosdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59D651152E0DAAD000A276F3 /* Build configuration list for PBXNativeTarget "audiosdk" */;
+			buildPhases = (
+				59D6510B2E0DAAD000A276F3 /* Headers */,
+				59D6510C2E0DAAD000A276F3 /* Sources */,
+				59D6510D2E0DAAD000A276F3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				59D651102E0DAAD000A276F3 /* audiosdk */,
+			);
+			name = audiosdk;
+			packageProductDependencies = (
+			);
+			productName = audiosdk;
+			productReference = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+		59D6511B2E0DAAF900A276F3 /* TestSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59D651202E0DAAF900A276F3 /* Build configuration list for PBXNativeTarget "TestSDK" */;
+			buildPhases = (
+				59D651182E0DAAF900A276F3 /* Sources */,
+				59D651192E0DAAF900A276F3 /* Frameworks */,
+				59D6511A2E0DAAF900A276F3 /* CopyFiles */,
+				59371DE92E0DB6B200BB40E6 /* Embed Libraries */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59371DE82E0DB6B200BB40E6 /* PBXTargetDependency */,
+				59C746042E10516700537FB5 /* PBXTargetDependency */,
+				59C7460B2E1051AE00537FB5 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				59D6511D2E0DAAF900A276F3 /* TestSDK */,
+			);
+			name = TestSDK;
+			packageProductDependencies = (
+			);
+			productName = TestSDK;
+			productReference = 59D6511C2E0DAAF900A276F3 /* TestSDK */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		59D650D62E0DAA9800A276F3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1640;
+				LastUpgradeCheck = 1640;
+				TargetAttributes = {
+					59C733B42E1020DA00537FB5 = {
+						CreatedOnToolsVersion = 16.4;
+						LastSwiftMigration = 1640;
+					};
+					59C73B922E103FB100537FB5 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					59D650DD2E0DAA9800A276F3 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					59D650ED2E0DAA9900A276F3 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 59D650DD2E0DAA9800A276F3;
+					};
+					59D650F72E0DAA9900A276F3 = {
+						CreatedOnToolsVersion = 16.4;
+						TestTargetID = 59D650DD2E0DAA9800A276F3;
+					};
+					59D6510E2E0DAAD000A276F3 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+					59D6511B2E0DAAF900A276F3 = {
+						CreatedOnToolsVersion = 16.4;
+					};
+				};
+			};
+			buildConfigurationList = 59D650D92E0DAA9800A276F3 /* Build configuration list for PBXProject "tiffin" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 59D650D52E0DAA9800A276F3;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 59D650DF2E0DAA9800A276F3 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 59C7415B2E103FF200537FB5 /* Products */;
+					ProjectRef = 59C740BB2E103FF200537FB5 /* whisper.objc.xcodeproj */;
+				},
+				{
+					ProductGroup = 59C7415D2E103FF200537FB5 /* Products */;
+					ProjectRef = 59C740D62E103FF200537FB5 /* whisper.swiftui.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				59D650DD2E0DAA9800A276F3 /* tiffin */,
+				59D650ED2E0DAA9900A276F3 /* tiffinTests */,
+				59D650F72E0DAA9900A276F3 /* tiffinUITests */,
+				59D6510E2E0DAAD000A276F3 /* audiosdk */,
+				59D6511B2E0DAAF900A276F3 /* TestSDK */,
+				59C733B42E1020DA00537FB5 /* transcribe */,
+				59C73B922E103FB100537FB5 /* WhisperCore */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		59D650DC2E0DAA9800A276F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59C745FF2E10513100537FB5 /* ggml-base.bin in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650EC2E0DAA9900A276F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59C746012E10513100537FB5 /* ggml-base.bin in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650F62E0DAA9900A276F3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59C746002E10513100537FB5 /* ggml-base.bin in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		59C733B22E1020DA00537FB5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59C73B902E103FB100537FB5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650DA2E0DAA9800A276F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650EA2E0DAA9900A276F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D650F42E0DAA9900A276F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D6510C2E0DAAD000A276F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59D651182E0DAAF900A276F3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59371DD92E0DB69400BB40E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59D6510E2E0DAAD000A276F3 /* audiosdk */;
+			targetProxy = 59371DD82E0DB69400BB40E6 /* PBXContainerItemProxy */;
+		};
+		59371DDE2E0DB6A200BB40E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59D6510E2E0DAAD000A276F3 /* audiosdk */;
+			targetProxy = 59371DDD2E0DB6A200BB40E6 /* PBXContainerItemProxy */;
+		};
+		59371DE32E0DB6A800BB40E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59D6510E2E0DAAD000A276F3 /* audiosdk */;
+			targetProxy = 59371DE22E0DB6A800BB40E6 /* PBXContainerItemProxy */;
+		};
+		59371DE82E0DB6B200BB40E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59D6510E2E0DAAD000A276F3 /* audiosdk */;
+			targetProxy = 59371DE72E0DB6B200BB40E6 /* PBXContainerItemProxy */;
+		};
+		59C746042E10516700537FB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59C73B922E103FB100537FB5 /* WhisperCore */;
+			targetProxy = 59C746032E10516700537FB5 /* PBXContainerItemProxy */;
+		};
+		59C746072E10518100537FB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59C73B922E103FB100537FB5 /* WhisperCore */;
+			targetProxy = 59C746062E10518100537FB5 /* PBXContainerItemProxy */;
+		};
+		59C7460B2E1051AE00537FB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59C733B42E1020DA00537FB5 /* transcribe */;
+			targetProxy = 59C7460A2E1051AE00537FB5 /* PBXContainerItemProxy */;
+		};
+		59C7460F2E1051B800537FB5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59C733B42E1020DA00537FB5 /* transcribe */;
+			targetProxy = 59C7460E2E1051B800537FB5 /* PBXContainerItemProxy */;
+		};
+		59D650F02E0DAA9900A276F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59D650DD2E0DAA9800A276F3 /* tiffin */;
+			targetProxy = 59D650EF2E0DAA9900A276F3 /* PBXContainerItemProxy */;
+		};
+		59D650FA2E0DAA9900A276F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59D650DD2E0DAA9800A276F3 /* tiffin */;
+			targetProxy = 59D650F92E0DAA9900A276F3 /* PBXContainerItemProxy */;
+		};
+		59D651232E0DAAF900A276F3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 59D6510E2E0DAAD000A276F3 /* audiosdk */;
+			targetProxy = 59D651242E0DAAF900A276F3 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		59C733BB2E1020DA00537FB5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "transcribe/transcribe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		59C733BC2E1020DA00537FB5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "transcribe/transcribe-Bridging-Header.h";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		59C73B9A2E103FB100537FB5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				INFOPLIST_KEY_MetalCaptureEnabled = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WhisperCore/build/examples",
+					"$(PROJECT_DIR)/WhisperCore/build/ggml/src",
+					"$(PROJECT_DIR)/WhisperCore/build/ggml/src/ggml-metal",
+					"$(PROJECT_DIR)/WhisperCore/build/ggml/src/ggml-blas",
+					"$(PROJECT_DIR)/WhisperCore/build/src",
+				);
+				MTL_ENABLE_MODULES = YES;
+				OTHER_CFLAGS = (
+					"-DWHISPER_METAL",
+					"-DGGML_USE_ACCELERATE",
+					"-O3",
+					"-DNDEBUG",
+					"-DGGML_USE_METAL",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		59C73B9B2E103FB100537FB5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				EXECUTABLE_PREFIX = lib;
+				GCC_PREPROCESSOR_DEFINITIONS = "register_backend(ggml_backend_cpu_reg());";
+				INFOPLIST_KEY_MetalCaptureEnabled = YES;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/WhisperCore/build/examples",
+					"$(PROJECT_DIR)/WhisperCore/build/ggml/src",
+					"$(PROJECT_DIR)/WhisperCore/build/ggml/src/ggml-metal",
+					"$(PROJECT_DIR)/WhisperCore/build/ggml/src/ggml-blas",
+					"$(PROJECT_DIR)/WhisperCore/build/src",
+				);
+				MTL_ENABLE_MODULES = YES;
+				OTHER_CFLAGS = (
+					"-DWHISPER_METAL",
+					"-DGGML_USE_ACCELERATE",
+					"-O3",
+					"-DNDEBUG",
+					"-DGGML_USE_METAL",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		59D651002E0DAA9900A276F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/WhisperCore/include",
+					"$(PROJECT_DIR)/WhisperCore/ggml/include",
+					"$(PROJECT_DIR)/WhisperCore/src",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		59D651012E0DAA9900A276F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/WhisperCore/src",
+					"$(PROJECT_DIR)/WhisperCore/ggml/include",
+					"$(PROJECT_DIR)/WhisperCore/include",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		59D651032E0DAA9900A276F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = tiffin/tiffin.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = tiffin/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-laudiosdk",
+					"-framework",
+					AVFoundation,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					CoreAudio,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarclass.tiffin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		59D651042E0DAA9900A276F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = tiffin/tiffin.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = tiffin/Info.plist;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-laudiosdk",
+					"-framework",
+					AVFoundation,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					CoreAudio,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarclass.tiffin;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		59D651062E0DAA9900A276F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarclass.tiffinTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tiffin.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tiffin";
+			};
+			name = Debug;
+		};
+		59D651072E0DAA9900A276F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarclass.tiffinTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/tiffin.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/tiffin";
+			};
+			name = Release;
+		};
+		59D651092E0DAA9900A276F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarclass.tiffinUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = tiffin;
+			};
+			name = Debug;
+		};
+		59D6510A2E0DAA9900A276F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lunarclass.tiffinUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = tiffin;
+			};
+			name = Release;
+		};
+		59D651162E0DAAD000A276F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = audiosdk/audiosdk.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					AVFoundation,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					CoreAudio,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		59D651172E0DAAD000A276F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = audiosdk/audiosdk.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					AVFoundation,
+					"-framework",
+					AudioToolbox,
+					"-framework",
+					CoreAudio,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		59D651212E0DAAF900A276F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		59D651222E0DAAF900A276F3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		59C733BD2E1020DA00537FB5 /* Build configuration list for PBXNativeTarget "transcribe" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59C733BB2E1020DA00537FB5 /* Debug */,
+				59C733BC2E1020DA00537FB5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59C73B992E103FB100537FB5 /* Build configuration list for PBXNativeTarget "WhisperCore" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59C73B9A2E103FB100537FB5 /* Debug */,
+				59C73B9B2E103FB100537FB5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59D650D92E0DAA9800A276F3 /* Build configuration list for PBXProject "tiffin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59D651002E0DAA9900A276F3 /* Debug */,
+				59D651012E0DAA9900A276F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59D651022E0DAA9900A276F3 /* Build configuration list for PBXNativeTarget "tiffin" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59D651032E0DAA9900A276F3 /* Debug */,
+				59D651042E0DAA9900A276F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59D651052E0DAA9900A276F3 /* Build configuration list for PBXNativeTarget "tiffinTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59D651062E0DAA9900A276F3 /* Debug */,
+				59D651072E0DAA9900A276F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59D651082E0DAA9900A276F3 /* Build configuration list for PBXNativeTarget "tiffinUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59D651092E0DAA9900A276F3 /* Debug */,
+				59D6510A2E0DAA9900A276F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59D651152E0DAAD000A276F3 /* Build configuration list for PBXNativeTarget "audiosdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59D651162E0DAAD000A276F3 /* Debug */,
+				59D651172E0DAAD000A276F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59D651202E0DAAF900A276F3 /* Build configuration list for PBXNativeTarget "TestSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59D651212E0DAAF900A276F3 /* Debug */,
+				59D651222E0DAAF900A276F3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 59D650D62E0DAA9800A276F3 /* Project object */;
+}
