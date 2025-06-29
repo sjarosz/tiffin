@@ -125,7 +125,6 @@ class ProcessSettings: ObservableObject {
 // MARK: - Main Content View
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var recordings: [AudioRecording]
     
     @StateObject private var recordingManager = AudioRecordingManager()
     @StateObject private var processSettings = ProcessSettings()
@@ -139,7 +138,6 @@ struct ContentView: View {
     @State private var selectedProcess: ProcessInfo?
     
     // UI state
-    @State private var recordingTitle = ""
     @State private var showingSettings = false
     @State private var lastScanTime: String = "Never"
     
@@ -155,17 +153,8 @@ struct ContentView: View {
             
             Divider()
             
-            // Main Content
-            HStack(spacing: 0) {
-                // Left Panel - Controls
-                controlPanel
-                    .frame(width: 350)
-                
-                Divider()
-                
-                // Right Panel - Recordings
-                recordingsPanel
-            }
+            // Main Content - Just the control panel now
+            controlPanel
         }
         .onAppear {
             refreshDevicesAndProcesses()
@@ -320,10 +309,6 @@ struct ContentView: View {
                     .font(.headline)
             }
             
-            // Recording Title
-            TextField("Recording title (optional)", text: $recordingTitle)
-                .textFieldStyle(.roundedBorder)
-            
             // Record/Stop Button
             if recordingManager.isRecording {
                 VStack(spacing: 8) {
@@ -348,45 +333,6 @@ struct ContentView: View {
                 .controlSize(.large)
                 .frame(maxWidth: .infinity)
                 .disabled(selectedProcess == nil || selectedInputDevice == nil)
-            }
-        }
-    }
-    
-    // MARK: - Recordings Panel
-    private var recordingsPanel: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Recordings Header
-            HStack {
-                Text("Recordings")
-                    .font(.headline)
-                    .padding()
-                
-                Spacer()
-            }
-            .background(Color(NSColor.controlBackgroundColor))
-            
-            Divider()
-            
-            // Recordings List
-            if recordings.isEmpty {
-                VStack {
-                    Spacer()
-                    Text("No recordings yet")
-                        .foregroundColor(.secondary)
-                    Text("Start your first recording")
-                        .foregroundColor(.secondary)
-                        .font(.caption)
-                    Spacer()
-                }
-            } else {
-                List {
-                    ForEach(recordings) { recording in
-                        RecordingRow(recording: recording)
-                            .padding(.vertical, 4)
-                    }
-                    .onDelete(perform: deleteRecordings)
-                }
-                .listStyle(.plain)
             }
         }
     }
@@ -437,7 +383,7 @@ struct ContentView: View {
         guard let process = selectedProcess,
               let inputDevice = selectedInputDevice else { return }
         
-        let title = recordingTitle.isEmpty ? "\(process.displayName) Recording" : recordingTitle
+        let title = "\(process.displayName) Recording"
         
         recordingManager.startRecording(
             pid: process.pid,
@@ -461,30 +407,11 @@ struct ContentView: View {
             )
             
             modelContext.insert(recording)
-            recordingTitle = ""
         }
     }
     
     private func stopRecording() {
         recordingManager.stopRecording()
-    }
-    
-    private func deleteRecordings(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                let recording = recordings[index]
-                
-                // Delete actual files
-                if let processURL = recording.processFileURL {
-                    try? FileManager.default.removeItem(at: processURL)
-                }
-                if let micURL = recording.microphoneFileURL {
-                    try? FileManager.default.removeItem(at: micURL)
-                }
-                
-                modelContext.delete(recording)
-            }
-        }
     }
     
     private func getFileSize(_ url: URL?) -> Int64 {
@@ -547,55 +474,6 @@ struct ProcessCard: View {
             )
         }
         .buttonStyle(.plain)
-    }
-}
-
-// MARK: - Recording Row View
-struct RecordingRow: View {
-    let recording: AudioRecording
-    
-    var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(recording.title)
-                    .font(.headline)
-                    .lineLimit(1)
-                
-                HStack {
-                    Text(recording.processName)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    
-                    Spacer()
-                    
-                    Text(recording.formattedDuration)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                
-                HStack {
-                    Text(recording.recordingTypeDescription)
-                        .font(.caption2)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(Color.blue.opacity(0.2))
-                        .cornerRadius(4)
-                    
-                    Spacer()
-                    
-                    Text(recording.formattedFileSize)
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                    
-                    Text(recording.recordingDate, format: .dateTime.month().day().hour().minute())
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                }
-            }
-            
-            Spacer()
-        }
-        .contentShape(Rectangle())
     }
 }
 
