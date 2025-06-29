@@ -386,14 +386,15 @@ private extension TranscribeEngine {
         return try await withCheckedThrowingContinuation { continuation in
             DispatchQueue.global(qos: .userInitiated).async {
                 do {
-                    // Initialize WhisperCore
+                    // Initialize WhisperCore with default configuration (GPU preferred with CPU fallback)
                     guard let whisperCore = WhisperCore(modelPath: modelPath) else {
                         self.logger.error("Failed to initialize WhisperCore")
                         continuation.resume(throwing: TranscriptionError.serviceNotAvailable("Failed to initialize whisper"))
                         return
                     }
                     
-                    self.logger.info("WhisperCore initialized successfully. Model info: \(whisperCore.modelInfo)")
+                    let deviceType = whisperCore.isUsingGPU ? "GPU" : "CPU"
+                    self.logger.info("WhisperCore initialized successfully using \(deviceType). Model info: \(whisperCore.modelInfo)")
                     
                     // Transcribe the audio file
                     guard let result = whisperCore.transcribeAudioFile(audioURL) else {
@@ -402,7 +403,8 @@ private extension TranscribeEngine {
                         return
                     }
                     
-                    self.logger.info("Whisper transcription completed. Text length: \(result.text.count), Segments: \(result.segments.count)")
+                    let performanceInfo = result.usedGPU ? " (GPU-accelerated)" : " (CPU-only)"
+                    self.logger.info("Whisper transcription completed\(performanceInfo). Text length: \(result.text.count), Segments: \(result.segments.count)")
                     
                     // Convert WhisperCore result to TranscriptionResult
                     let segments = result.segments.map { segment in

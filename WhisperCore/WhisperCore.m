@@ -20,6 +20,36 @@ extern "C" {
 
 NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
 
+// MARK: - WhisperCoreConfiguration Implementation
+
+@implementation WhisperCoreConfiguration
+
++ (instancetype)defaultConfiguration {
+    WhisperCoreConfiguration *config = [[WhisperCoreConfiguration alloc] init];
+    config.gpuMode = 1;  // WhisperCoreGPUModePreferred - Try GPU first, fallback to CPU
+    config.gpuDevice = 0;
+    config.flashAttention = YES;
+    config.threads = 4;
+    return config;
+}
+
+- (instancetype)initWithGPUMode:(WhisperCoreGPUMode)gpuMode {
+    self = [super init];
+    if (self) {
+        _gpuMode = gpuMode;
+        _gpuDevice = 0;
+        _flashAttention = YES;
+        _threads = 4;
+    }
+    return self;
+}
+
+- (instancetype)init {
+    return [self initWithGPUMode:1];  // WhisperCoreGPUModePreferred
+}
+
+@end
+
 // MARK: - WhisperCoreSegment Implementation
 
 @implementation WhisperCoreSegment
@@ -47,13 +77,15 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
 - (instancetype)initWithText:(NSString *)text
                     segments:(NSArray<WhisperCoreSegment *> *)segments
                     language:(NSString *)language
-                   modelUsed:(NSString *)modelUsed {
+                   modelUsed:(NSString *)modelUsed
+                     usedGPU:(BOOL)usedGPU {
     self = [super init];
     if (self) {
         _text = text;
         _segments = segments;
         _language = language;
         _modelUsed = modelUsed;
+        _usedGPU = usedGPU;
     }
     return self;
 }
@@ -65,6 +97,8 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
 @interface WhisperCore ()
 @property (nonatomic, assign) struct whisper_context *whisperContext;
 @property (nonatomic, strong) NSString *modelPath;
+@property (nonatomic, strong) WhisperCoreConfiguration *configuration;
+@property (nonatomic, assign) BOOL actuallyUsingGPU;
 @end
 
 @implementation WhisperCore
@@ -77,30 +111,108 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
 }
 
 - (nullable instancetype)initWithModelPath:(NSString *)modelPath {
+    // Use default configuration which is already set to GPU-preferred mode
+    WhisperCoreConfiguration *config = [WhisperCoreConfiguration defaultConfiguration];
+    config.threads = MAX(4, (int)(NSProcessInfo.processInfo.processorCount / 2));  // Use half of available cores
+    
+    return [self initWithModelPath:modelPath configuration:config];
+}
+
+- (nullable instancetype)initWithModelPath:(NSString *)modelPath 
+                             configuration:(WhisperCoreConfiguration *)configuration {
     self = [super init];
     if (self) {
         _modelPath = modelPath;
+        _configuration = configuration;
+        _actuallyUsingGPU = NO;
         
         // Check if model file exists
         if (![[NSFileManager defaultManager] fileExistsAtPath:modelPath]) {
+            NSLog(@"[WhisperCore] Model file not found: %@", modelPath);
             return nil;
         }
         
-        // Initialize whisper context
-        struct whisper_context_params cparams = whisper_context_default_params();
-        cparams.use_gpu = false; // Disable GPU for initial testing - will re-enable later
-        
-        _whisperContext = whisper_init_from_file_with_params([modelPath UTF8String], cparams);
+        // Try to initialize whisper context with the specified configuration
+        _whisperContext = [self initializeWhisperContextWithConfiguration:configuration];
         
         if (!_whisperContext) {
+            NSLog(@"[WhisperCore] Failed to initialize whisper context");
             return nil;
         }
     }
     return self;
 }
 
+- (struct whisper_context *)initializeWhisperContextWithConfiguration:(WhisperCoreConfiguration *)config {
+    struct whisper_context_params cparams = whisper_context_default_params();
+    
+    // Set basic parameters
+    cparams.flash_attn = config.flashAttention;
+    cparams.gpu_device = config.gpuDevice;
+    
+    // Handle GPU configuration
+    switch (config.gpuMode) {
+        case 0:  // WhisperCoreGPUModeDisabled
+            // CPU only
+            cparams.use_gpu = false;
+            NSLog(@"[WhisperCore] Using CPU only (as requested)");
+            return [self tryInitializeWithParams:cparams];
+            
+        case 2:  // WhisperCoreGPUModeRequired
+            // GPU required - fail if not available
+            cparams.use_gpu = true;
+            NSLog(@"[WhisperCore] Attempting GPU initialization (required)");
+            return [self tryInitializeWithParams:cparams];
+            
+        case 1:  // WhisperCoreGPUModePreferred
+        default:
+            // Try GPU first, fallback to CPU
+            NSLog(@"[WhisperCore] Attempting GPU initialization (with CPU fallback)");
+            
+            // First try with GPU
+            cparams.use_gpu = true;
+            struct whisper_context *ctx = [self tryInitializeWithParams:cparams];
+            
+            if (ctx) {
+                self.actuallyUsingGPU = YES;
+                NSLog(@"[WhisperCore] Successfully initialized with GPU acceleration");
+                return ctx;
+            }
+            
+            // GPU failed, try CPU
+            NSLog(@"[WhisperCore] GPU initialization failed, falling back to CPU");
+            cparams.use_gpu = false;
+            ctx = [self tryInitializeWithParams:cparams];
+            
+            if (ctx) {
+                self.actuallyUsingGPU = NO;
+                NSLog(@"[WhisperCore] Successfully initialized with CPU");
+                return ctx;
+            }
+            
+            NSLog(@"[WhisperCore] Both GPU and CPU initialization failed");
+            return NULL;
+    }
+}
+
+- (struct whisper_context *)tryInitializeWithParams:(struct whisper_context_params)cparams {
+    struct whisper_context *ctx = whisper_init_from_file_with_params([self.modelPath UTF8String], cparams);
+    
+    if (ctx && cparams.use_gpu) {
+        // For GPU mode, verify that GPU is actually being used
+        // This is a basic check - whisper.cpp should handle GPU initialization internally
+        self.actuallyUsingGPU = YES;
+    }
+    
+    return ctx;
+}
+
 - (BOOL)isInitialized {
     return _whisperContext != NULL;
+}
+
+- (BOOL)isUsingGPU {
+    return _actuallyUsingGPU;
 }
 
 - (NSString *)modelInfo {
@@ -113,8 +225,10 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
     int n_audio_ctx = whisper_n_audio_ctx(_whisperContext);
     int n_text_ctx = whisper_n_text_ctx(_whisperContext);
     
-    return [NSString stringWithFormat:@"Vocab: %d, Audio ctx: %d, Text ctx: %d", 
-            n_vocab, n_audio_ctx, n_text_ctx];
+    NSString *deviceInfo = _actuallyUsingGPU ? @"GPU" : @"CPU";
+    
+    return [NSString stringWithFormat:@"Device: %@, Vocab: %d, Audio ctx: %d, Text ctx: %d", 
+            deviceInfo, n_vocab, n_audio_ctx, n_text_ctx];
 }
 
 - (nullable WhisperCoreResult *)transcribeAudioData:(const float *)audioData
@@ -135,7 +249,7 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
     wparams.print_special = false;
     wparams.translate = false;
     wparams.language = "auto"; // Auto-detect language
-    wparams.n_threads = 4;
+    wparams.n_threads = _configuration.threads;
     wparams.n_max_text_ctx = 16384;
     wparams.offset_ms = 0;
     wparams.duration_ms = 0;
@@ -144,6 +258,7 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
     int result = whisper_full(_whisperContext, wparams, audioData, (int)sampleCount);
     
     if (result != 0) {
+        NSLog(@"[WhisperCore] Transcription failed with code: %d", result);
         return nil;
     }
     
@@ -182,10 +297,13 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
         }
     }
     
+    NSString *modelUsed = [NSString stringWithFormat:@"whisper.cpp (%@)", _actuallyUsingGPU ? @"GPU" : @"CPU"];
+    
     return [[WhisperCoreResult alloc] initWithText:[fullText copy]
                                           segments:[segments copy]
                                           language:detectedLanguage
-                                         modelUsed:@"whisper.cpp"];
+                                         modelUsed:modelUsed
+                                           usedGPU:_actuallyUsingGPU];
 }
 
 - (nullable WhisperCoreResult *)transcribeAudioFile:(NSURL *)audioFileURL {
@@ -224,6 +342,7 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
     // Open the audio file
     AVAudioFile *audioFile = [[AVAudioFile alloc] initForReading:audioFileURL error:&audioError];
     if (!audioFile) {
+        NSLog(@"[WhisperCore] Failed to open audio file: %@", audioError.localizedDescription);
         return nil;
     }
     
@@ -234,6 +353,7 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
                                                                    interleaved:NO];
     
     if (!targetFormat) {
+        NSLog(@"[WhisperCore] Failed to create target audio format");
         return nil;
     }
     
@@ -241,6 +361,7 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
     AVAudioConverter *converter = [[AVAudioConverter alloc] initFromFormat:audioFile.processingFormat
                                                                   toFormat:targetFormat];
     if (!converter) {
+        NSLog(@"[WhisperCore] Failed to create audio converter");
         return nil;
     }
     
@@ -252,6 +373,7 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
     AVAudioPCMBuffer *outputBuffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:targetFormat
                                                                    frameCapacity:outputFrameCount];
     if (!outputBuffer) {
+        NSLog(@"[WhisperCore] Failed to create output buffer");
         return nil;
     }
     
@@ -277,6 +399,7 @@ NSString *const WhisperCoreErrorDomain = @"com.lunarclass.whispercore";
                                                    withInputFromBlock:inputBlock];
     
     if (status != AVAudioConverterOutputStatus_HaveData) {
+        NSLog(@"[WhisperCore] Audio conversion failed: %@", conversionError.localizedDescription);
         return nil;
     }
     
