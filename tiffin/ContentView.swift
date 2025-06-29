@@ -440,10 +440,10 @@ struct ContentView: View {
     private func stopRecording() {
         recordingManager.stopRecording()
         
-        // Start transcription process after 1 minute delay
+        // Start transcription process after 5 second delay
         Task { @MainActor in
             isTranscribing = true
-            transcriptionCountdown = 60
+            transcriptionCountdown = 5
             
             // Start countdown timer
             transcriptionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
@@ -503,19 +503,19 @@ struct ContentView: View {
         logger.info("Transcribing file: \(audioFileURL.lastPathComponent)")
         
         do {
-            // Use local Whisper for transcription
+            // Use local Whisper for transcription with GPU acceleration
             let result = try await TranscribeEngine.transcribe(
                 audioURL: audioFileURL,
                 service: .whisperLocal,
                 language: "auto"
             )
             
-            logger.info("Transcription completed for \(audioFileURL.lastPathComponent)")
+            let performanceInfo = result.modelUsed.contains("GPU") ? " with GPU acceleration" : " with CPU"
+            logger.info("Transcription completed\(performanceInfo) for \(audioFileURL.lastPathComponent)")
             logger.info("Text length: \(result.text.count), Segments: \(result.segments.count)")
             
             // Save transcript to file in the same directory
             let transcriptFileName = audioFileURL.deletingPathExtension().appendingPathExtension("txt")
-            let transcriptTimestampFileName = audioFileURL.deletingPathExtension().lastPathComponent + "_timestamps.json"
             let transcriptTimestampURL = audioFileURL.deletingPathExtension().appendingPathExtension("json")
             
             // Save plain text transcript
