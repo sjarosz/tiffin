@@ -11,6 +11,7 @@ import audiosdk
 import OSLog
 import AppKit
 import CoreAudio
+import transcribe
 
 // MARK: - Audio Device Model
 struct AudioDevice: Identifiable, Hashable {
@@ -140,9 +141,12 @@ struct ContentView: View {
     // UI state
     @State private var showingSettings = false
     @State private var lastScanTime: String = "Never"
+    @State private var isTranscribing = false
+    @State private var transcriptionCountdown = 0
     
     // Auto-refresh timer
     @State private var refreshTimer: Timer?
+    @State private var transcriptionTimer: Timer?
     
     private let logger = Logger(subsystem: "com.lunarclass.tiffin", category: "ContentView")
     
@@ -325,6 +329,29 @@ struct ContentView: View {
                         .foregroundColor(.red)
                         .frame(maxWidth: .infinity)
                 }
+            } else if isTranscribing {
+                VStack(spacing: 8) {
+                    Button("Transcribing...") {
+                        // No action - disabled during transcription
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .controlSize(.large)
+                    .tint(.orange)
+                    .frame(maxWidth: .infinity)
+                    .disabled(true)
+                    
+                    if transcriptionCountdown > 0 {
+                        Text("Waiting: \(transcriptionCountdown)s")
+                            .font(.caption)
+                            .foregroundColor(.orange)
+                            .frame(maxWidth: .infinity)
+                    } else {
+                        Text("Processing transcription...")
+                            .font(.caption)
+                            .foregroundColor(.orange)
+                            .frame(maxWidth: .infinity)
+                    }
+                }
             } else {
                 Button("Start Recording") {
                     startRecording()
@@ -412,6 +439,110 @@ struct ContentView: View {
     
     private func stopRecording() {
         recordingManager.stopRecording()
+        
+        // Start transcription process after 1 minute delay
+        Task { @MainActor in
+            isTranscribing = true
+            transcriptionCountdown = 60
+            
+            // Start countdown timer
+            transcriptionTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                Task { @MainActor in
+                    transcriptionCountdown -= 1
+                    if transcriptionCountdown <= 0 {
+                        timer.invalidate()
+                        await performTranscription()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func performTranscription() async {
+        logger.info("Starting transcription process")
+        
+        // Get the most recent recording files
+        let recordingsDir = recordingManager.getRecordingsDirectory()
+        
+        do {
+            let contents = try FileManager.default.contentsOfDirectory(at: recordingsDir, includingPropertiesForKeys: [.creationDateKey])
+            
+            // Get recently created audio files (within last 5 minutes)
+            let recentFiles = contents.filter { url in
+                url.pathExtension == "wav" &&
+                (try? url.resourceValues(forKeys: [.creationDateKey]))?.creationDate?.timeIntervalSinceNow ?? -3600 > -300
+            }.sorted { url1, url2 in
+                let date1 = (try? url1.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? Date.distantPast
+                let date2 = (try? url2.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? Date.distantPast
+                return date1 > date2
+            }
+            
+            logger.info("Found \(recentFiles.count) recent audio files to transcribe")
+            
+            // Transcribe each file
+            for audioFileURL in recentFiles {
+                await transcribeFile(audioFileURL)
+            }
+            
+        } catch {
+            logger.error("Failed to list recordings directory: \(error.localizedDescription)")
+        }
+        
+        // Reset transcription state
+        await MainActor.run {
+            isTranscribing = false
+            transcriptionCountdown = 0
+            transcriptionTimer?.invalidate()
+            transcriptionTimer = nil
+        }
+        
+        logger.info("Transcription process completed")
+    }
+    
+    private func transcribeFile(_ audioFileURL: URL) async {
+        logger.info("Transcribing file: \(audioFileURL.lastPathComponent)")
+        
+        do {
+            // Use local Whisper for transcription
+            let result = try await TranscribeEngine.transcribe(
+                audioURL: audioFileURL,
+                service: .whisperLocal,
+                language: "auto"
+            )
+            
+            logger.info("Transcription completed for \(audioFileURL.lastPathComponent)")
+            logger.info("Text length: \(result.text.count), Segments: \(result.segments.count)")
+            
+            // Save transcript to file in the same directory
+            let transcriptFileName = audioFileURL.deletingPathExtension().appendingPathExtension("txt")
+            let transcriptTimestampFileName = audioFileURL.deletingPathExtension().lastPathComponent + "_timestamps.json"
+            let transcriptTimestampURL = audioFileURL.deletingPathExtension().appendingPathExtension("json")
+            
+            // Save plain text transcript
+            try result.text.write(to: transcriptFileName, atomically: true, encoding: .utf8)
+            logger.info("Saved transcript to: \(transcriptFileName.lastPathComponent)")
+            
+            // Save timestamped transcript if available
+            if !result.segments.isEmpty {
+                let segments = result.segments.map { segment in
+                    TranscriptSegment(
+                        startTime: segment.startTime,
+                        endTime: segment.endTime,
+                        text: segment.text,
+                        confidence: segment.confidence != nil ? Double(segment.confidence!) : nil
+                    )
+                }
+                
+                let encoder = JSONEncoder()
+                encoder.outputFormatting = .prettyPrinted
+                let segmentsData = try encoder.encode(segments)
+                try segmentsData.write(to: transcriptTimestampURL)
+                logger.info("Saved timestamped transcript to: \(transcriptTimestampURL.lastPathComponent)")
+            }
+            
+        } catch {
+            logger.error("Failed to transcribe \(audioFileURL.lastPathComponent): \(error.localizedDescription)")
+        }
     }
     
     private func getFileSize(_ url: URL?) -> Int64 {
@@ -435,6 +566,8 @@ struct ContentView: View {
     private func stopAutoRefresh() {
         refreshTimer?.invalidate()
         refreshTimer = nil
+        transcriptionTimer?.invalidate()
+        transcriptionTimer = nil
     }
 }
 
