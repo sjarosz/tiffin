@@ -57,6 +57,7 @@ class AudioRecordingManager: ObservableObject {
         processName: String,
         title: String,
         includeMicrophone: Bool,
+        inputDeviceID: Int? = nil,
         completion: @escaping (URL?, URL?, TimeInterval) -> Void
     ) {
         guard !isRecording else {
@@ -64,7 +65,7 @@ class AudioRecordingManager: ObservableObject {
             return
         }
         
-        logger.info("Starting recording - PID: \(pid), Process: \(processName), Include Mic: \(includeMicrophone)")
+        logger.info("Starting recording - PID: \(pid), Process: \(processName), Include Mic: \(includeMicrophone), Input Device: \(inputDeviceID ?? -1)")
         
         self.recordingCompletion = completion
         
@@ -83,7 +84,9 @@ class AudioRecordingManager: ObservableObject {
             try audioRecorder.startRecording(
                 pid: pid,
                 outputFile: processFileURL,
-                microphoneFile: micFileURL
+                microphoneFile: micFileURL,
+                outputDeviceID: nil, // Use default output device
+                inputDeviceID: inputDeviceID // Pass the selected input device
             )
             
             // Start recording state
