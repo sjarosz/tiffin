@@ -10,6 +10,7 @@ class AIManager {
     
     // Kuzco Client
     private var kuzco: Kuzco?
+    private var modelProfile: ModelProfile?
     
     // Chat state
     var chatMessages: [ChatMessage] = []
@@ -17,7 +18,7 @@ class AIManager {
     var currentResponse = ""
     
     // Model configuration
-    private let modelName = "phi-3-mini-4k-instruct-q4_0.gguf"
+    private let modelName = "Phi-3-mini-4k-instruct-q4.gguf"
     private var isModelLoaded = false
     
     init() {
@@ -32,7 +33,7 @@ class AIManager {
     }
     
     private func loadModel() async {
-        logger.info("Loading LLM model: \(self.modelName)")
+        logger.info("🦙 Starting to load LLM model: \(self.modelName)")
         
         // Get the path to the downloaded model
         let homeDirectory = FileManager.default.homeDirectoryForCurrentUser
@@ -42,18 +43,84 @@ class AIManager {
             .appendingPathComponent("models")
             .appendingPathComponent(modelName)
         
+        logger.info("🦙 Looking for model at: \(modelPath.path)")
+        
         // Check if model file exists
         guard FileManager.default.fileExists(atPath: modelPath.path) else {
-            logger.error("Model file not found at: \(modelPath.path)")
+            logger.error("🦙 ❌ Model file not found at: \(modelPath.path)")
+            await MainActor.run {
+                self.isModelLoaded = false
+            }
             return
         }
         
-        logger.info("Found model at: \(modelPath.path)")
+        // Check file size
+        do {
+            let attributes = try FileManager.default.attributesOfItem(atPath: modelPath.path)
+            if let fileSize = attributes[.size] as? Int64 {
+                logger.info("🦙 ✅ Found model file, size: \(fileSize / 1024 / 1024) MB")
+            }
+        } catch {
+            logger.warning("🦙 ⚠️ Could not get model file size: \(error)")
+        }
         
-        // Initialize Kuzco with the model
-        self.kuzco = Kuzco.shared
-        self.isModelLoaded = true
-        self.logger.info("Kuzco initialized successfully with model: \(self.modelName)")
+        do {
+            // Initialize Kuzco
+            self.kuzco = Kuzco.shared
+            logger.info("🦙 Kuzco shared instance initialized")
+            
+            // Create model profile for Phi-3
+            self.modelProfile = ModelProfile(
+                sourcePath: modelPath.path,
+                architecture: .phiGeneric
+            )
+            logger.info("🦙 Model profile created with architecture: .phiGeneric")
+            
+            // Validate the model file
+            try self.modelProfile!.validateModelFile()
+            logger.info("🦙 ✅ Model file validation passed")
+            
+            // Pre-load the model instance to ensure it's ready
+            logger.info("🦙 Starting model instance creation...")
+            let (_, loadStream) = await kuzco!.instance(
+                for: self.modelProfile!,
+                settings: .performanceFocused,
+                predictionConfig: .balanced
+            )
+            
+            logger.info("🦙 Model instance created, waiting for load stream...")
+            
+            // Wait for model to be ready
+            var updateCount = 0
+            for await update in loadStream {
+                updateCount += 1
+                logger.info("🦙 Model loading update #\(updateCount): \(update.stage.rawValue) - \(update.detail ?? "")")
+                
+                if update.stage == .ready {
+                    await MainActor.run {
+                        self.isModelLoaded = true
+                    }
+                    self.logger.info("🦙 ✅ Model loaded successfully: \(self.modelName)")
+                    break
+                } else if update.stage == .failed {
+                    self.logger.error("🦙 ❌ Model loading failed: \(update.detail ?? "Unknown error")")
+                    await MainActor.run {
+                        self.isModelLoaded = false
+                    }
+                    return
+                }
+            }
+            
+            if !isModelLoaded {
+                logger.error("🦙 ❌ Model loading completed but isModelLoaded is still false")
+            }
+            
+        } catch {
+            self.logger.error("🦙 ❌ Failed to load model: \(error.localizedDescription)")
+            await MainActor.run {
+                self.isModelLoaded = false
+            }
+        }
     }
     
     // MARK: - Chat Interface
@@ -94,9 +161,13 @@ class AIManager {
         """
         
         // Use real Kuzco LLM
-        guard let kuzco = self.kuzco else {
+        logger.info("🦙 Checking model status - kuzco: \(self.kuzco != nil), modelProfile: \(self.modelProfile != nil), isModelLoaded: \(self.isModelLoaded)")
+        
+        guard let kuzco = self.kuzco, let modelProfile = self.modelProfile, self.isModelLoaded else {
+            let debugInfo = "kuzco=\(self.kuzco != nil), profile=\(self.modelProfile != nil), loaded=\(self.isModelLoaded)"
+            logger.error("🦙 ❌ Model not ready for generation. Status: \(debugInfo)")
             await MainActor.run {
-                currentResponse = "Model not loaded. Please try again."
+                currentResponse = "Model not loaded. Please try again. Debug: \(debugInfo)"
                 let assistantMessage = ChatMessage(role: .assistant, content: currentResponse, timestamp: Date())
                 chatMessages.append(assistantMessage)
                 isProcessing = false
@@ -111,20 +182,6 @@ class AIManager {
         ]
         
         do {
-            // Get the model path
-            let homeDirectory = FileManager.default.homeDirectoryForCurrentUser
-            let modelPath = homeDirectory
-                .appendingPathComponent("Documents")
-                .appendingPathComponent("Tiffin")
-                .appendingPathComponent("models")
-                .appendingPathComponent(modelName)
-            
-            // Create model profile for Phi-3
-            let modelProfile = ModelProfile(
-                sourcePath: modelPath.path,
-                architecture: .phiGeneric
-            )
-            
             // Start streaming prediction
             let stream = try await kuzco.predict(
                 dialogue: dialogue,
