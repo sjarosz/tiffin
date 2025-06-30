@@ -2,7 +2,6 @@
 //  ContentView.swift
 //  tiffin
 //
-//  Created by Steven Jarosz (Ping) on 6/26/25.
 //
 
 import SwiftUI

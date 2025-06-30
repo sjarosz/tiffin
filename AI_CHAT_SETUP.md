@@ -1,6 +1,6 @@
 # AI Chat Setup Guide for Tiffin
 
-This guide explains how to complete the AI chat integration in your Tiffin app. The basic infrastructure has been added, but you need to add a local LLM package dependency and activate the real LLM functionality.
+This guide explains how to complete the AI chat integration in your Tiffin app using **Kuzco** for local LLM functionality.
 
 ## Overview
 
@@ -16,215 +16,77 @@ The implementation consists of:
 1. **AIManager.swift** - Handles LLM interactions and transcript search
 2. **ChatView.swift** - SwiftUI chat interface  
 3. **ContentView.swift** - Updated with AI Chat button and integration
-4. **AudioRecording model** - Enhanced with transcript path storage
+4. **AudioRecording model** - Enhanced with transcript paths for AI search
 
-## Setup Options
+## ✅ Current Status
 
-### Option A: Kuzco (Recommended - More Stable)
+- ✅ Kuzco package integrated
+- ✅ Chat interface working with simulated responses
+- ✅ Transcript search and RAG system ready
+- ✅ Close button added to chat interface
 
-**Kuzco** is a newer, more polished Swift wrapper around llama.cpp that's more stable than LocalLLMClient.
+## 📋 Next Steps: Model Setup
 
-#### 1. Add Kuzco Package Dependency
+### Step 1: Download the Model
 
-In Xcode:
-1. Go to **File > Add Package Dependencies**
-2. Enter URL: `https://github.com/jaredcassoutt/Kuzco.git`
-3. Select "Up to Next Major" with version 1.0.0+
-4. Add the **Kuzco** target to your app
+You need to download a GGUF format model. **Recommended**: Phi-3-Mini-4K-Instruct
 
-#### 2. Update AIManager.swift for Kuzco
+**Download this model:**
+- **Model**: `phi-3-mini-4k-instruct-q4_0.gguf`
+- **Size**: ~2.4GB
+- **Quality**: Good balance of performance and accuracy for Apple Silicon
 
-Replace the imports and implementation:
+**Download Sources:**
+1. **Hugging Face** (recommended): https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/resolve/main/Phi-3-mini-4k-instruct-q4_0.gguf
+2. **Alternative**: https://huggingface.co/bartowski/Phi-3-mini-4k-instruct-GGUF/resolve/main/Phi-3-mini-4k-instruct-Q4_0.gguf
 
-```swift
-import Kuzco
+### Step 2: Model Placement
 
-// In AIManager class
-private var kuzco: Kuzco?
+Create a models directory in your project and place the downloaded file:
 
-// Update loadModel() method:
-private func loadModel() async {
-    guard !isModelLoaded else { return }
-    
-    do {
-        self.kuzco = Kuzco.shared
-        
-        // You'll need to download a model first
-        // For now, we'll simulate loading
-        self.isModelLoaded = true
-        self.logger.info("Kuzco initialized successfully")
-    } catch {
-        self.logger.error("Failed to initialize Kuzco: \(error)")
-    }
-}
+```bash
+# Create models directory
+mkdir -p ~/Documents/Tiffin/models
 
-// Update generateResponse() method:
-private func generateResponse(to userMessage: String, 
-                            context: [TranscriptSearchResult]) async {
-    guard let kuzco = self.kuzco else {
-        await MainActor.run {
-            currentResponse = "Model not loaded. Please try again."
-        }
-        return
-    }
-    
-    let systemPrompt = buildSystemPrompt(with: context)
-    let dialogue = [
-        Turn(role: .system, text: systemPrompt),
-        Turn(role: .user, text: userMessage)
-    ]
-    
-    do {
-        // You'll need to specify a model profile
-        // This is a placeholder - you'll need to set up your model
-        let stream = try await kuzco.predict(
-            dialogue: dialogue,
-            with: ModelProfile(sourcePath: "/path/to/model.gguf", architecture: .llama3),
-            instanceSettings: .performanceFocused,
-            predictionConfig: .creative
-        )
-        
-        for try await token in stream {
-            await MainActor.run {
-                currentResponse += token
-            }
-        }
-    } catch {
-        logger.error("Kuzco generation error: \(error)")
-        await MainActor.run {
-            currentResponse = "Sorry, I encountered an error processing your request."
-        }
-    }
-}
+# Place your downloaded model here:
+~/Documents/Tiffin/models/phi-3-mini-4k-instruct-q4_0.gguf
 ```
 
-### Option B: LocalLLMClient (Fixed Version)
+### Step 3: Verify Download
 
-If you prefer to continue with LocalLLMClient, here's the corrected setup:
+The model file should be approximately **2.4GB**. You can verify with:
 
-#### 1. Add LocalLLMClient Package (Fixed)
-
-In Xcode:
-1. Go to **File > Add Package Dependencies**
-2. Enter URL: `https://github.com/tattn/LocalLLMClient.git`
-3. **Important**: Select "Branch" and enter `main` (not version numbers)
-4. Click "Add Anyway" when you see the unstable dependencies warning
-5. You should see the **LocalLLMClient** package added (it contains multiple modules internally)
-
-#### 2. Update AIManager.swift for LocalLLMClient
-
-```swift
-import LocalLLMClient
-import LocalLLMClientLlama
-import LocalLLMClientUtility
-
-// In loadModel() method, replace simulation with:
-do {
-    // Download model if needed
-    let modelName = "phi-3-mini-4k-instruct-q4_0.gguf"
-    let downloader = FileDownloader(source: .huggingFace(
-        id: "microsoft/Phi-3-mini-4k-instruct-gguf",
-        globs: [modelName]
-    ))
-    
-    try await downloader.download { progress in
-        self.logger.info("Download progress: \(progress)")
-    }
-    
-    // Initialize LLM client
-    let modelURL = downloader.destination.appending(component: modelName)
-    self.llmClient = try await LocalLLMClient.llama(url: modelURL, parameter: .init(
-        context: 4096,
-        temperature: 0.7,
-        topK: 40,
-        topP: 0.9
-    ))
-    
-    self.isModelLoaded = true
-    self.logger.info("LLM model loaded successfully")
-} catch {
-    self.logger.error("Failed to load LLM model: \(error)")
-}
-
-// In generateResponse() method:
-let input = LLMInput.chat([
-    .system(systemPrompt),
-    .user(userMessage)
-])
-
-do {
-    for try await token in try await llmClient?.textStream(from: input) ?? [] {
-        await MainActor.run {
-            currentResponse += token
-        }
-    }
-} catch {
-    logger.error("LLM generation error: \(error)")
-    await MainActor.run {
-        currentResponse = "Sorry, I encountered an error processing your request."
-    }
-}
+```bash
+ls -lh ~/Documents/Tiffin/models/
 ```
 
-## Why You're Seeing Only One Package
+## 🚀 What Happens Next
 
-When you add LocalLLMClient, Xcode shows it as one package because it's structured as a single repository with multiple Swift modules (LocalLLMClient, LocalLLMClientLlama, LocalLLMClientUtility). These are automatically available once you add the main package.
+Once you've downloaded the model and confirmed it's in the correct location, I'll:
 
-## Recommended Approach
+1. **Update AIManager.swift** to use the real Kuzco LLM instead of simulation
+2. **Configure the model path** to point to your downloaded file
+3. **Enable real AI responses** that search and reference your transcripts
+4. **Test the integration** to ensure everything works smoothly
 
-I recommend **Option A (Kuzco)** because:
-- More stable and production-ready
-- Better documentation and examples
-- Cleaner API design
-- Active development and support
+## 📁 Directory Structure
 
-## Next Steps
+After setup, your structure should look like:
+```
+~/Documents/Tiffin/
+└── models/
+    └── phi-3-mini-4k-instruct-q4_0.gguf  (2.4GB)
+```
 
-1. Choose either Option A or B above
-2. Add the package dependency to your project
-3. Update the AIManager.swift code accordingly
-4. Test the integration
+## 🔧 Technical Details
 
-## Model Download and Setup
-
-Both options will need you to:
-1. Download an appropriate GGUF model file (2-4GB)
-2. Place it in your app's documents directory
-3. Update the model path in the code
-
-**Recommended starter model**: Phi-3-Mini-4K-Instruct (Q4_0 quantized) - good balance of quality and performance.
-
-Let me know which option you'd like to proceed with, and I can provide more specific setup instructions!
-
-## Summary
-
-This setup provides:
-- ✅ Chat interface with streaming responses
-- ✅ Transcript search and context building  
-- ✅ Beautiful macOS-native UI
-- ✅ Integration with existing recording/transcription workflow
-- ✅ Local processing (privacy-focused)
-
-## Usage
-
-1. **Record and Transcribe**: Use the main app to record and transcribe conversations
-2. **Open AI Chat**: Click the "AI Chat" button in the header  
-3. **Ask Questions**: Type natural language questions about your recordings
-4. **Get Answers**: The AI will search your transcripts and provide contextual answers
-
-## Performance Notes
-
-- **First Launch**: Model download may take several minutes (2-4GB)
-- **Apple Silicon**: Optimized for M1/M2/M3 chips with Metal acceleration
-- **Memory Usage**: Recommend 8GB+ RAM for best performance
-- **Privacy**: All processing happens locally - no data sent to external services
-
-## Troubleshooting
-
-- If packages fail to resolve, clean build folder and try again
-- Ensure adequate disk space (models require 2-4GB)
-- Check internet connection for initial model download
+- **Framework**: Kuzco (Swift wrapper for llama.cpp)
+- **GPU Acceleration**: Automatic via Metal on Apple Silicon
+- **Memory Usage**: ~4GB RAM during inference
+- **Privacy**: 100% local processing, no cloud calls
 
 ---
 
-This AI chat functionality provides powerful querying capabilities for your recorded content while maintaining complete privacy through local processing. 
+**Ready?** Download the model file to the specified path and let me know when it's complete!
+
+ 

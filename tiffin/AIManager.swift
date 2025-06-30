@@ -34,24 +34,26 @@ class AIManager {
     private func loadModel() async {
         logger.info("Loading LLM model: \(self.modelName)")
         
-        // TODO: Initialize Kuzco when model is available
-        /*
-        do {
-            self.kuzco = Kuzco.shared
-            
-            // You'll need to download a model first
-            // For now, we'll simulate loading
-            self.isModelLoaded = true
-            self.logger.info("Kuzco initialized successfully")
-        } catch {
-            self.logger.error("Failed to initialize Kuzco: \(error)")
-        }
-        */
+        // Get the path to the downloaded model
+        let homeDirectory = FileManager.default.homeDirectoryForCurrentUser
+        let modelPath = homeDirectory
+            .appendingPathComponent("Documents")
+            .appendingPathComponent("Tiffin")
+            .appendingPathComponent("models")
+            .appendingPathComponent(modelName)
         
-        // For now, simulate model loading
-        try? await Task.sleep(nanoseconds: 2_000_000_000)
-        isModelLoaded = true
-        logger.info("LLM model simulation loaded")
+        // Check if model file exists
+        guard FileManager.default.fileExists(atPath: modelPath.path) else {
+            logger.error("Model file not found at: \(modelPath.path)")
+            return
+        }
+        
+        logger.info("Found model at: \(modelPath.path)")
+        
+        // Initialize Kuzco with the model
+        self.kuzco = Kuzco.shared
+        self.isModelLoaded = true
+        self.logger.info("Kuzco initialized successfully with model: \(self.modelName)")
     }
     
     // MARK: - Chat Interface
@@ -91,11 +93,14 @@ class AIManager {
         - Include approximate timestamps when relevant
         """
         
-        // TODO: Replace with actual Kuzco call when model is available
-        /*
+        // Use real Kuzco LLM
         guard let kuzco = self.kuzco else {
             await MainActor.run {
                 currentResponse = "Model not loaded. Please try again."
+                let assistantMessage = ChatMessage(role: .assistant, content: currentResponse, timestamp: Date())
+                chatMessages.append(assistantMessage)
+                isProcessing = false
+                currentResponse = ""
             }
             return
         }
@@ -106,36 +111,40 @@ class AIManager {
         ]
         
         do {
-            // You'll need to specify a model profile
-            // This is a placeholder - you'll need to set up your model
+            // Get the model path
+            let homeDirectory = FileManager.default.homeDirectoryForCurrentUser
+            let modelPath = homeDirectory
+                .appendingPathComponent("Documents")
+                .appendingPathComponent("Tiffin")
+                .appendingPathComponent("models")
+                .appendingPathComponent(modelName)
+            
+            // Create model profile for Phi-3
+            let modelProfile = ModelProfile(
+                sourcePath: modelPath.path,
+                architecture: .phiGeneric
+            )
+            
+            // Start streaming prediction
             let stream = try await kuzco.predict(
                 dialogue: dialogue,
-                with: ModelProfile(sourcePath: "/path/to/model.gguf", architecture: .llama3),
+                systemPrompt: systemPrompt,
+                with: modelProfile,
                 instanceSettings: .performanceFocused,
                 predictionConfig: .creative
             )
             
+            // Stream tokens as they arrive
             for try await token in stream {
                 await MainActor.run {
                     currentResponse += token
                 }
             }
+            
         } catch {
             logger.error("Kuzco generation error: \(error)")
             await MainActor.run {
-                currentResponse = "Sorry, I encountered an error processing your request."
-            }
-        }
-        */
-        
-        // Simulated response for now
-        let simulatedResponse = generateSimulatedResponse(for: userMessage, with: transcripts)
-        
-        // Simulate streaming response
-        for char in simulatedResponse {
-            try? await Task.sleep(nanoseconds: 50_000_000) // 50ms delay per character
-            await MainActor.run {
-                currentResponse += String(char)
+                currentResponse = "Sorry, I encountered an error processing your request: \(error.localizedDescription)"
             }
         }
         
@@ -247,30 +256,7 @@ class AIManager {
         return context
     }
     
-    // MARK: - Simulated Response (remove when real LLM is integrated)
-    private func generateSimulatedResponse(for query: String, with transcripts: [TranscriptSegment]) -> String {
-        if transcripts.isEmpty {
-            return "I couldn't find any relevant information in your transcriptions about '\(query)'. Try rephrasing your question or make sure the content was recorded and transcribed."
-        }
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        
-        let recentTranscript = transcripts.first!
-        
-        return """
-        Based on your transcriptions, I found relevant information about "\(query)".
-        
-        The most relevant discussion was at \(recentTranscript.formattedTimeRange).
-        
-        Here's what I found:
-        \(recentTranscript.text)
-        
-        I found \(transcripts.count) relevant segment(s) in your recordings.
-        
-        Would you like me to search for more specific details about any aspect of this topic?
-        """
-    }
+
     
     // MARK: - Utility Methods
     func clearChat() {
