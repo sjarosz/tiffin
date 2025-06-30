@@ -1,0 +1,24 @@
+{
+  "originHash" : "1743962e3eeb3da39adceca0ec3a8119a235f3c8d1b66263dab6d67ba1903592",
+  "pins" : [
+    {
+      "identity" : "kuzco",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jaredcassoutt/Kuzco.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "b4d7d89a59f9e346b05832a4e04694158b0d21d0"
+      }
+    },
+    {
+      "identity" : "llama.cpp",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ggerganov/llama.cpp",
+      "state" : {
+        "branch" : "9b75f03",
+        "revision" : "9b75f03cd2ec9cc482084049d87a0f08f9f01517"
+      }
+    }
+  ],
+  "version" : 3
+}
