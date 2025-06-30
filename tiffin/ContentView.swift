@@ -2,7 +2,6 @@
 //  ContentView.swift
 //  tiffin
 //
-//  Created by Steven Jarosz (Ping) on 6/26/25.
 //
 
 import SwiftUI
@@ -140,6 +139,7 @@ struct ContentView: View {
     
     // UI state
     @State private var showingSettings = false
+    @State private var showingChat = false
     @State private var lastScanTime: String = "Never"
     @State private var isTranscribing = false
     @State private var transcriptionCountdown = 0
@@ -170,6 +170,10 @@ struct ContentView: View {
         .sheet(isPresented: $showingSettings) {
             ProcessSettingsView(processSettings: processSettings)
         }
+        .sheet(isPresented: $showingChat) {
+            ChatView()
+                .frame(minWidth: 600, minHeight: 500)
+        }
         .onChange(of: processSettings.whitelistedProcesses) { _, _ in
             refreshProcesses()
         }
@@ -183,6 +187,16 @@ struct ContentView: View {
                 .fontWeight(.semibold)
             
             Spacer()
+            
+            // AI Chat button
+            Button(action: { showingChat = true }) {
+                HStack(spacing: 4) {
+                    Image(systemName: "brain.head.profile")
+                    Text("AI Chat")
+                }
+            }
+            .buttonStyle(.bordered)
+            .help("Ask questions about your recorded conversations")
             
             // Folder access button
             Button(action: openRecordingsFolder) {
@@ -522,22 +536,48 @@ struct ContentView: View {
             try result.text.write(to: transcriptFileName, atomically: true, encoding: .utf8)
             logger.info("Saved transcript to: \(transcriptFileName.lastPathComponent)")
             
+            // Prepare timestamped segments
+            let segments = result.segments.map { segment in
+                TranscriptSegment(
+                    startTime: segment.startTime,
+                    endTime: segment.endTime,
+                    text: segment.text,
+                    confidence: segment.confidence != nil ? Double(segment.confidence!) : nil
+                )
+            }
+            
             // Save timestamped transcript if available
-            if !result.segments.isEmpty {
-                let segments = result.segments.map { segment in
-                    TranscriptSegment(
-                        startTime: segment.startTime,
-                        endTime: segment.endTime,
-                        text: segment.text,
-                        confidence: segment.confidence != nil ? Double(segment.confidence!) : nil
-                    )
-                }
-                
+            if !segments.isEmpty {
                 let encoder = JSONEncoder()
                 encoder.outputFormatting = .prettyPrinted
                 let segmentsData = try encoder.encode(segments)
                 try segmentsData.write(to: transcriptTimestampURL)
                 logger.info("Saved timestamped transcript to: \(transcriptTimestampURL.lastPathComponent)")
+            }
+            
+            // Update AudioRecording model with transcript information
+            await MainActor.run {
+                // Find the corresponding AudioRecording and update it
+                let targetFileName = audioFileURL.lastPathComponent
+                let descriptor = FetchDescriptor<AudioRecording>(
+                    sortBy: [SortDescriptor(\.recordingDate, order: .reverse)]
+                )
+                
+                if let recordings = try? modelContext.fetch(descriptor),
+                   let recording = recordings.first(where: { recording in
+                       recording.processFileURL?.lastPathComponent == targetFileName ||
+                       recording.microphoneFileURL?.lastPathComponent == targetFileName
+                   }) {
+                    recording.transcriptText = result.text
+                    recording.transcriptPath = transcriptFileName.path
+                    recording.transcriptionStatus = .completed
+                    recording.transcriptionDate = Date()
+                    recording.transcriptionModelUsed = result.modelUsed
+                    recording.setTranscriptSegments(segments)
+                    
+                    try? modelContext.save()
+                    logger.info("Updated AudioRecording model with transcript data")
+                }
             }
             
         } catch {
