@@ -18,6 +18,7 @@ class AIManager {
     var currentResponse = ""
     
     // Model configuration
+    //private let modelName = "deepseek-r1-distill-llama-8b-q4_k_m.gguf"
     private let modelName = "Phi-3-mini-4k-instruct-q4.gguf"
     private var isModelLoaded = false
     
