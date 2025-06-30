@@ -15,7 +15,6 @@
 		59371DE12E0DB6A800BB40E6 /* libaudiosdk.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		59371DE52E0DB6B200BB40E6 /* libaudiosdk.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; };
 		59371DE62E0DB6B200BB40E6 /* libaudiosdk.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 59D6510F2E0DAAD000A276F3 /* libaudiosdk.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		597AB19C2E11F856000D201D /* Kuzco in Frameworks */ = {isa = PBXBuildFile; productRef = 597AB19B2E11F856000D201D /* Kuzco */; };
 		59ADAF5C2E105B330028B160 /* libWhisperCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C73B932E103FB100537FB5 /* libWhisperCore.a */; };
 		59ADAF5D2E1063590028B160 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C745E22E10496E00537FB5 /* Foundation.framework */; };
 		59ADAF5E2E10637B0028B160 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59C745DE2E10494C00537FB5 /* Metal.framework */; };
@@ -399,7 +398,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				59371DD62E0DB69400BB40E6 /* libaudiosdk.dylib in Frameworks */,
-				597AB19C2E11F856000D201D /* Kuzco in Frameworks */,
 				59C7460C2E1051B800537FB5 /* libtranscribe.dylib in Frameworks */,
 				59C746052E10518100537FB5 /* libWhisperCore.a in Frameworks */,
 			);
@@ -592,7 +590,6 @@
 			);
 			name = tiffin;
 			packageProductDependencies = (
-				597AB19B2E11F856000D201D /* Kuzco */,
 			);
 			productName = tiffin;
 			productReference = 59D650DE2E0DAA9800A276F3 /* tiffin.app */;
@@ -741,9 +738,6 @@
 			);
 			mainGroup = 59D650D52E0DAA9800A276F3;
 			minimizedProjectReferenceProxies = 1;
-			packageReferences = (
-				597AB19A2E11F856000D201D /* XCRemoteSwiftPackageReference "Kuzco" */,
-			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 59D650DF2E0DAA9800A276F3 /* Products */;
 			projectDirPath = "";
@@ -1408,25 +1402,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		597AB19A2E11F856000D201D /* XCRemoteSwiftPackageReference "Kuzco" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/jaredcassoutt/Kuzco.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		597AB19B2E11F856000D201D /* Kuzco */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 597AB19A2E11F856000D201D /* XCRemoteSwiftPackageReference "Kuzco" */;
-			productName = Kuzco;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 59D650D62E0DAA9800A276F3 /* Project object */;
 }
