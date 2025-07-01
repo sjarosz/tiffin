@@ -40,11 +40,10 @@ public struct ProcessDiscovery {
                 _ = try AudioObjectID.translatePIDToProcessObjectID(pid: pid)
                 result.append((pid, procName))
                 audioCapableCount += 1
-                logger.debug("Audio-capable process found: \(procName, privacy: .public) [PID: \(pid)]")
             } catch {
                 // Log first few failures for debugging
                 if checkedProcesses <= 10 {
-                    logger.debug("Process \(procName, privacy: .public) [PID: \(pid)] is not audio-capable: \(error.localizedDescription, privacy: .public)")
+                   // logger.debug("Process \(procName, privacy: .public) [PID: \(pid)] is not //audio-capable: \(error.localizedDescription, privacy: .public)")
                 }
                 continue
             }

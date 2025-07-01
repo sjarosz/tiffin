@@ -361,7 +361,7 @@ struct ContentView: View {
                 }
             } else if isTranscribing {
                 VStack(spacing: 8) {
-                    Button("Transcribing...") {
+                    Button("Batch Transcribing...") {
                         // No action - disabled during transcription
                     }
                     .buttonStyle(.borderedProminent)
@@ -376,7 +376,7 @@ struct ContentView: View {
                             .foregroundColor(.orange)
                             .frame(maxWidth: .infinity)
                     } else {
-                        Text("Processing transcription...")
+                        Text("Scanning & transcribing audio files...")
                             .font(.caption)
                             .foregroundColor(.orange)
                             .frame(maxWidth: .infinity)
@@ -489,29 +489,50 @@ struct ContentView: View {
     }
     
     private func performTranscription() async {
-        logger.info("Starting transcription process")
+        logger.info("Starting batch transcription process - scanning for untranscribed audio files")
         
-        // Get the most recent recording files
+        // Get the recordings directory
         let recordingsDir = recordingManager.getRecordingsDirectory()
         
         do {
             let contents = try FileManager.default.contentsOfDirectory(at: recordingsDir, includingPropertiesForKeys: [.creationDateKey])
             
-            // Get recently created audio files (within last 5 minutes)
-            let recentFiles = contents.filter { url in
-                url.pathExtension == "wav" &&
-                (try? url.resourceValues(forKeys: [.creationDateKey]))?.creationDate?.timeIntervalSinceNow ?? -3600 > -300
+            // Supported audio file extensions
+            let supportedExtensions = ["wav", "mp3", "m4a", "aif", "aiff", "caf", "flac"]
+            
+            // Find all audio files
+            let audioFiles = contents.filter { url in
+                supportedExtensions.contains(url.pathExtension.lowercased())
+            }
+            
+            // Filter to only files that don't have both transcript artifacts (.txt and .json)
+            let filesToTranscribe = audioFiles.filter { audioURL in
+                let txtURL = audioURL.deletingPathExtension().appendingPathExtension("txt")
+                let jsonURL = audioURL.deletingPathExtension().appendingPathExtension("json")
+                
+                let hasTxt = FileManager.default.fileExists(atPath: txtURL.path)
+                let hasJson = FileManager.default.fileExists(atPath: jsonURL.path)
+                
+                // Transcribe if missing either or both transcription files
+                return !hasTxt || !hasJson
             }.sorted { url1, url2 in
+                // Sort by creation date (newest first) so recently recorded files are processed first
                 let date1 = (try? url1.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? Date.distantPast
                 let date2 = (try? url2.resourceValues(forKeys: [.creationDateKey]))?.creationDate ?? Date.distantPast
                 return date1 > date2
             }
             
-            logger.info("Found \(recentFiles.count) recent audio files to transcribe")
+            logger.info("Found \(audioFiles.count) total audio files, \(filesToTranscribe.count) need transcription")
             
-            // Transcribe each file
-            for audioFileURL in recentFiles {
-                await transcribeFile(audioFileURL)
+            if filesToTranscribe.isEmpty {
+                logger.info("All audio files already have transcription artifacts - no work to do")
+            } else {
+                logger.info("Transcribing files: \(filesToTranscribe.map { $0.lastPathComponent }.joined(separator: ", "))")
+                
+                // Transcribe each file that needs it
+                for audioFileURL in filesToTranscribe {
+                    await transcribeFile(audioFileURL)
+                }
             }
             
         } catch {
@@ -526,11 +547,28 @@ struct ContentView: View {
             transcriptionTimer = nil
         }
         
-        logger.info("Transcription process completed")
+        logger.info("Batch transcription process completed")
     }
     
     private func transcribeFile(_ audioFileURL: URL) async {
-        logger.info("Transcribing file: \(audioFileURL.lastPathComponent)")
+        // Check what transcription artifacts are missing
+        let txtURL = audioFileURL.deletingPathExtension().appendingPathExtension("txt")
+        let jsonURL = audioFileURL.deletingPathExtension().appendingPathExtension("json")
+        
+        let hasTxt = FileManager.default.fileExists(atPath: txtURL.path)
+        let hasJson = FileManager.default.fileExists(atPath: jsonURL.path)
+        
+        if hasTxt && hasJson {
+            logger.info("Skipping \(audioFileURL.lastPathComponent) - already has complete transcription artifacts")
+            return
+        }
+        
+        let missingArtifacts = [
+            !hasTxt ? "txt" : nil,
+            !hasJson ? "json" : nil
+        ].compactMap { $0 }
+        
+        logger.info("Transcribing \(audioFileURL.lastPathComponent) - missing: \(missingArtifacts.joined(separator: ", "))")
         
         do {
             // Use local Whisper for transcription with GPU acceleration
@@ -544,13 +582,17 @@ struct ContentView: View {
             logger.info("Transcription completed\(performanceInfo) for \(audioFileURL.lastPathComponent)")
             logger.info("Text length: \(result.text.count), Segments: \(result.segments.count)")
             
-            // Save transcript to file in the same directory
+            // Save transcript files only if they don't already exist
             let transcriptFileName = audioFileURL.deletingPathExtension().appendingPathExtension("txt")
             let transcriptTimestampURL = audioFileURL.deletingPathExtension().appendingPathExtension("json")
             
-            // Save plain text transcript
-            try result.text.write(to: transcriptFileName, atomically: true, encoding: .utf8)
-            logger.info("Saved transcript to: \(transcriptFileName.lastPathComponent)")
+            // Save plain text transcript only if it doesn't exist
+            if !FileManager.default.fileExists(atPath: transcriptFileName.path) {
+                try result.text.write(to: transcriptFileName, atomically: true, encoding: .utf8)
+                logger.info("Saved transcript to: \(transcriptFileName.lastPathComponent)")
+            } else {
+                logger.info("Transcript file already exists, skipping: \(transcriptFileName.lastPathComponent)")
+            }
             
             // Prepare timestamped segments
             let segments = result.segments.map { segment in
@@ -562,13 +604,15 @@ struct ContentView: View {
                 )
             }
             
-            // Save timestamped transcript if available
-            if !segments.isEmpty {
+            // Save timestamped transcript only if it doesn't exist and we have segments
+            if !segments.isEmpty && !FileManager.default.fileExists(atPath: transcriptTimestampURL.path) {
                 let encoder = JSONEncoder()
                 encoder.outputFormatting = .prettyPrinted
                 let segmentsData = try encoder.encode(segments)
                 try segmentsData.write(to: transcriptTimestampURL)
                 logger.info("Saved timestamped transcript to: \(transcriptTimestampURL.lastPathComponent)")
+            } else if !segments.isEmpty {
+                logger.info("Timestamped transcript file already exists, skipping: \(transcriptTimestampURL.lastPathComponent)")
             }
             
             // Update AudioRecording model with transcript information
