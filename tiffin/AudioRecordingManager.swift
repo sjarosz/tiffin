@@ -20,17 +20,10 @@ class AudioRecordingManager: ObservableObject {
     private var recordingStartTime: Date?
     private var recordingCompletion: ((URL?, URL?, TimeInterval) -> Void)?
     
-    // File management
-    private let recordingsDirectory: URL
+    // File management - now uses SettingsManager
+    private let settings = SettingsManager.shared
     
     init() {
-        // Create recordings directory in Documents
-        let documentsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        self.recordingsDirectory = documentsPath.appendingPathComponent("TiffinRecordings")
-        
-        // Ensure directory exists
-        try? FileManager.default.createDirectory(at: recordingsDirectory, withIntermediateDirectories: true)
-        
         setupAudioRecorder()
     }
     
@@ -76,8 +69,8 @@ class AudioRecordingManager: ObservableObject {
         let processFileName = "process_\(processName.replacingOccurrences(of: " ", with: "_"))_\(dateString).wav"
         let micFileName = "mic_\(processName.replacingOccurrences(of: " ", with: "_"))_\(dateString).wav"
         
-        let processFileURL = recordingsDirectory.appendingPathComponent(processFileName)
-        let micFileURL = includeMicrophone ? recordingsDirectory.appendingPathComponent(micFileName) : nil
+        let processFileURL = settings.recordingsDirectory.appendingPathComponent(processFileName)
+        let micFileURL = includeMicrophone ? settings.recordingsDirectory.appendingPathComponent(micFileName) : nil
         
         do {
             try audioRecorder.startRecording(
@@ -155,7 +148,7 @@ class AudioRecordingManager: ObservableObject {
         dateFormatter.dateFormat = "yyyy-MM-dd_HH-mm-ss"
         
         // Look for recently created files
-        let contents = try? FileManager.default.contentsOfDirectory(at: recordingsDirectory, includingPropertiesForKeys: [.creationDateKey])
+        let contents = try? FileManager.default.contentsOfDirectory(at: settings.recordingsDirectory, includingPropertiesForKeys: [.creationDateKey])
         
         let recentProcessFiles = contents?.filter { url in
             url.lastPathComponent.starts(with: "process_") &&
@@ -172,12 +165,12 @@ class AudioRecordingManager: ObservableObject {
     // MARK: - Utility Methods
     
     func getRecordingsDirectory() -> URL {
-        return recordingsDirectory
+        return settings.recordingsDirectory
     }
     
     func clearAllRecordings() {
         do {
-            let contents = try FileManager.default.contentsOfDirectory(at: recordingsDirectory, includingPropertiesForKeys: nil)
+            let contents = try FileManager.default.contentsOfDirectory(at: settings.recordingsDirectory, includingPropertiesForKeys: nil)
             for fileURL in contents {
                 try FileManager.default.removeItem(at: fileURL)
             }

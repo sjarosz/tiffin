@@ -139,6 +139,7 @@ struct ContentView: View {
     
     // UI state
     @State private var showingSettings = false
+    @State private var showingAppSettings = false
     @State private var showingChat = false
     @State private var lastScanTime: String = "Never"
     @State private var isTranscribing = false
@@ -169,6 +170,10 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showingSettings) {
             ProcessSettingsView(processSettings: processSettings)
+        }
+        .sheet(isPresented: $showingAppSettings) {
+            SettingsView()
+                .frame(minWidth: 500, minHeight: 400)
         }
         .sheet(isPresented: $showingChat) {
             ChatView()
@@ -208,10 +213,21 @@ struct ContentView: View {
             .buttonStyle(.bordered)
             .help("Open recordings folder in Finder")
             
-            Button("Settings") {
+            // App Settings button
+            Button(action: { showingAppSettings = true }) {
+                HStack(spacing: 4) {
+                    Image(systemName: "gear")
+                    Text("Settings")
+                }
+            }
+            .buttonStyle(.bordered)
+            .help("App settings and preferences")
+            
+            Button("Processes") {
                 showingSettings = true
             }
             .buttonStyle(.bordered)
+            .help("Configure which processes to monitor")
         }
         .padding()
         .background(Color(NSColor.controlBackgroundColor))
